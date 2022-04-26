@@ -1,10 +1,13 @@
 <template>
 	<view class="attainShare">
 	  <view class="canvasCss">
-		<painter :palette="paintPallette" @imgOK="onImgOK" :use2D="true"/>
+		  <image style="width: 344px; height:539px" :src="imagePath" mode="scaleToFill"/>
 	  </view>
 	  <view class="canvasButton" >
 		<button type="default" @click="saveImage">保存图片</button>
+	  </view>
+	  <view style="position:fixed;left:-9999px">
+	  	<painter :palette="paintPallette" widthPixels="720" @imgOK="onImgOK" :use2D="true"/>
 	  </view>
 	</view>
 </template>
@@ -24,6 +27,7 @@
 		methods: {
 			onImgOK(e) {
 			  this.imagePath = e.detail.path;
+			  console.log(this.imagePath);
 			  if (this.isSave) {
 			    this.saveImage(this.imagePath);
 			  }
@@ -149,7 +153,6 @@
 					  color: 'black'
 					},
 				});
-
 				this.paintPallette = {
 				  width: '344px',
 				  height: '539px',
