@@ -1,7 +1,7 @@
 <template>
 	<view class="attainShare">
 	  <view class="canvasCss">
-		  <image style="width: 344px; height:539px" :src="imagePath" mode="scaleToFill"/>
+		  <image style="width: 344px; height:580px" :src="imagePath" mode="scaleToFill"/>
 	  </view>
 	  <view class="canvasButton" >
 		<button type="default" @click="saveImage">保存图片</button>
@@ -65,7 +65,7 @@
 			onLoad(option){
 				let data = option.views ? JSON.parse(decodeURIComponent(option.views)) : {
 					title:'万达城市公寓',
-					content:'北门已全面封闭，请联系外卖员到南门送货。将有专业人士对货品进行消杀处理；明日核酸，请居民提前做好准备；小区巡逻队已成立，请居民继续保持“足不出户”。',
+					content:'北门已全面封闭，请联系外卖员到南门送货。将有专业人士对货品进行消杀处理；明日核酸，请居民提前做好准备；小区巡逻队已成立，请居民继续保持“足不出户”。将有专业人士对货品进行消杀处理；明日核酸，请居民提前做好准备；',
 					contact:'如有疑问请联系张三 139XXXXXXXX',
 					date: '2022年4月14日'
 				};
@@ -77,7 +77,7 @@
 					  top: '77px',
 					  color:'#FAFAFA',
 					  width: '312px',
-					  height:'229px',
+					  height:'149px',
 					  borderRadius: '16px'
 					},
 				});
@@ -99,7 +99,7 @@
 					css: {
 					  left: '16px',
 					  top: '49px',
-					  fontSize: '14px',
+					  fontSize: '12px',
 					  lineHeight: '20px',
 					  fontFamily: 'Inter',
 					  fontWeight: 600,
@@ -110,8 +110,8 @@
 					text: '公告',
 					css: {
 					  left: '156px',
-					  top: '89px',
-					  fontSize: '16px',
+					  top: '85px',
+					  fontSize: '14px',
 					  lineHeight: '22px',
 					  fontFamily: 'Inter',
 					  fontWeight: 600,
@@ -122,42 +122,80 @@
 					text: data.content,
 					css: {
 					  left: '32px',
-					  top: '123px',
+					  top: '109px',
 					  fontWeight: 400,
-					  fontSize: '16px',
+					  fontSize: '12px',
 					  fontFamily: 'Inter',
 					  lineHeight: '24px',
 					  width: '280px'
 					},
 				});
 				views.push({
-					type: 'image',
-					url: data.imgUrl ? data.imgUrl[0] : 'http://tmp/YIMSNIHfEZOca8909a9935ba9f95aaab9aca11f20798.jpeg',
-					css: {
-					  left: '16px',
-					  top: '314px',
-					  mode: "aspectFill",
-					  width: '312px',
-					  height: '180px'
-					},
-				});
-				views.push({
 					type: 'text',
 					text: data.contact,
 					css: {
-					  right: '14px',
-					  bottom: '14px',
+					  right: '16px',
+					  bottom: '4px',
 					  fontWeight: 400,
 					  fontSize: '12px',
 					  lineHeight: '22px',
 					  color: 'black'
 					},
 				});
-				this.paintPallette = {
-				  width: '344px',
-				  height: '539px',
-				  background: '#fff',
-				  views: views,
+				var _this = this;
+				if(data.imgUrl && data.imgUrl[0]){
+					uni.getImageInfo({
+						src:data.imgUrl[0],
+						success:function(img){
+							console.log(img.width, img.height);
+							if(img.width > img.height){
+								let t = 240 + (312 - img.height*312/img.width)/2 + 'px';
+								let h = img.height*312/img.width + 'px';
+								views.push({
+									type: 'image',
+									url: data.imgUrl[0],
+									css: {
+									  left: '16px',
+									  top: t,
+									  width: '312px',
+									  height: h
+									},
+								});
+								_this.paintPallette = {
+								  width: '344px',
+								  height: '580px',
+								  background: '#fff',
+								  views: views,
+								}
+							}else{
+								let t = (344 - img.width*312/img.height)/2 + 'px';
+								let w = img.width*312/img.height + 'px';
+								views.push({
+									type: 'image',
+									url: data.imgUrl[0],
+									css: {
+									  left: t,
+									  top: '240px',
+									  width: w,
+									  height: '312px'
+									},
+								});
+								_this.paintPallette = {
+								  width: '344px',
+								  height: '580px',
+								  background: '#fff',
+								  views: views,
+								}
+							}
+						}
+					})
+				}else{
+					this.paintPallette = {
+					  width: '344px',
+					  height: '580px',
+					  background: '#fff',
+					  views: views,
+					}
 				}
 			},
 	}}

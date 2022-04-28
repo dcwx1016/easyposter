@@ -40,5 +40,11 @@
 			"van-datetime-picker": "/wxcomponents/vant/datetime-picker/index",
 			"painter": "/wxcomponents/painter/painter"
 		}
-	}
+	},
+	"easycom": {  
+	  "autoscan": true,  
+	  "custom": {  
+		  "^uni-((?!(shadow-root|icons)).*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue" //这里排除了uni-shadow-root，uni-icons  
+	  }  
+  }
 }

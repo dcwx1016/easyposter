@@ -90,10 +90,26 @@
 		.img-show{
 			height: 150px;
 		}
-		.del{
+	}
+	.image-preview{
+		margin-top: 10px;
+		margin-bottom: -10px;
+		width: 100%;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		image{
+			width: 100px;
+			height: 100px;
+		}
+		i{
 			position: absolute;
-			top: 40px;
-			right: 10px;
+			font-size: 20px;
+			background-color: white;
+			border-radius: 10px;
+			top: -10px;
+			right: -10px;
 		}
 	}
 	.test{

@@ -5,63 +5,68 @@
 				<text class='title'>小区日报</text>
 				<text class="subtitle">输入信息将展示在日报中</text>
 			</view>
-			<view class="input-block">
-				<text>日报的时间</text>
-				<van-cell custom-class='test' @click="showPopup(true)">
-					<view slot="title" style="font-size: 14px;color: rgba(0,0,0,.4)">
-						{{date}}
-					</view>
-				</van-cell>
-				
-			</view>
-			<view class="input-block">
-				<text>小区名字</text>
-				<textarea 
-					class='test'
-					placeholder="例：万达城市公寓" 
-					placeholder-style="font-size: 14px;color: rgba(0,0,0,.4);"
-					v-model="title" 
-					@change='onChangeTitle'
-				/>
-<!-- 				<text class="length">
-					{{ title.length }}/10
-				</text> -->
-			</view>
-			<view class="input-block">
-				<text>公告</text>
-				<textarea 
-					class='test-multi'
-					placeholder-style="font-size: 14px;color: rgba(0,0,0,.4)"
-					placeholder="简要阐明公告内容，建议不超过3点" 
-					v-model="content" 
-					@change='onChangeContent'
-				/>
-<!-- 				<text class="length">
-					{{ content.length }}/50
-				</text> -->
-			</view>
-			<view class="input-block"  >
-				<text>上传你的小区平面图</text>
-				<view class='img-upload' >
-					<text v-if="!imgUrl" @click="ChooseImage">
-						可先编辑后上传
-					</text>
-					<view class="" v-else>
-						<image class="img-show" :src="imgUrl" mode="heightFix" />
-						<text class="del" @click="removeImg">移除</text>
+			<scroll-view :scroll-y="true" :style="{'height':scrollViewH}" scroll-with-animation="true">
+				<view class="input-block">
+					<text>日报的时间</text>
+					<van-cell custom-class='test' @click="showPopup(true)">
+						<view slot="title" style="font-size: 14px;color: rgba(0,0,0,.4)">
+							{{date}}
+						</view>
+					</van-cell>
+				</view>
+				<view class="input-block">
+					<text>小区名字</text>
+					<textarea 
+						class='test'
+						placeholder="例：万达城市公寓" 
+						placeholder-style="font-size: 14px;color: rgba(0,0,0,.4);"
+						v-model="title" 
+						@change='onChangeTitle'
+					/>
+	<!-- 				<text class="length">
+						{{ title.length }}/10
+					</text> -->
+				</view>
+				<view class="input-block">
+					<text>公告</text>
+					<textarea 
+						class='test-multi'
+						placeholder-style="font-size: 14px;color: rgba(0,0,0,.4)"
+						placeholder="简要阐明公告内容，建议不超过3点" 
+						v-model="content" 
+						@change='onChangeContent'/>
+	<!-- 				<text class="length">
+						{{ content.length }}/50
+					</text> -->
+				</view>
+				<view class="input-block" v-if="!imgUrl">
+					<text>上传你的小区平面图</text>
+					<view class='img-upload' >
+						<text @click="ChooseImage">
+							可先编辑后上传
+						</text>
 					</view>
 				</view>
-			</view>
-			<view class="input-block">
-				<text>备注</text>
-				<textarea 
-					class='test'
-					placeholder-style="font-size:14px;color: rgba(0,0,0,.4)"
-					placeholder="例：张三 139xxxxxxxx" 
-					v-model="contact" 
-					@change='onChangeContact'
-				/>
-			</view>
+				<view class="input-block" v-else>
+					<text>上传你的小区平面图</text>
+					<view class="image-preview">
+						<view style="width:100px;position: relative;">
+							<image :src="imgUrl" mode="aspectFit"/>
+							<i @click="removeImg" class="iconfont icon-shanchu"></i>
+						</view>
+					</view>
+				</view>
+				<view class="input-block">
+					<text>备注</text>
+					<textarea 
+						class='test'
+						placeholder-style="font-size:14px;color: rgba(0,0,0,.4)"
+						placeholder="例：张三 139xxxxxxxx" 
+						v-model="contact" 
+						@change='onChangeContact'
+					/>
+				</view>		
+			</scroll-view>
 		</view>
 		<view class="create-poster">
 			<button type="default" @click="handleCreate">生成</button>
@@ -122,6 +127,7 @@
 </script>
 
 <style lang="scss">
+	@import "../icon.scss";
 	@import './home.scss';
 	::-webkit-scrollbar {
 		display: none;
