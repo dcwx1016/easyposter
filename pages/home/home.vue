@@ -1,54 +1,38 @@
 <template>
 	<view class="content">
-		<view class="main">
-			<view class="header">
-				<text class='title'>小区日报</text>
-				<text class="subtitle">输入信息将展示在日报中</text>
-			</view>
-			<scroll-view :scroll-y="true" :style="{'height':scrollViewH}" scroll-with-animation="true">
+		<scroll-view :scroll-y="true">
+			<view class="main">
 				<view class="input-block">
-					<text>日报的时间</text>
-					<van-cell custom-class='test' @click="showPopup(true)">
-						<view slot="title" style="font-size: 14px;color: rgba(0,0,0,.4)">
+					<text class="title3">你想在哪里发布？</text>
+					<van-field custom-class='block' placeholder="请填写小区、街道或弄堂名称" @change="changeTitle"/>
+				</view>
+				<view class="input-block">
+					<text class="title3">你想在哪天发布？</text>
+					<van-cell custom-class='block' @click="showPopup(true)">
+						<view slot="title" style="color: #969696;font-size: 13px;">
 							{{date}}
 						</view>
 					</van-cell>
 				</view>
 				<view class="input-block">
-					<text>小区名字</text>
+					<text class="title3">你想告诉大家什么内容？</text>
 					<textarea 
-						class='test'
-						placeholder="例：万达城市公寓" 
-						placeholder-style="font-size: 14px;color: rgba(0,0,0,.4);"
-						v-model="title" 
-						@change='onChangeTitle'
-					/>
-	<!-- 				<text class="length">
-						{{ title.length }}/10
-					</text> -->
-				</view>
-				<view class="input-block">
-					<text>公告</text>
-					<textarea 
-						class='test-multi'
-						placeholder-style="font-size: 14px;color: rgba(0,0,0,.4)"
-						placeholder="简要阐明公告内容，建议不超过3点" 
-						v-model="content" 
-						@change='onChangeContent'/>
-	<!-- 				<text class="length">
-						{{ content.length }}/50
-					</text> -->
+						class='block multi footnote'
+						placeholder-style="font-size: 13px;color: #969696"
+						placeholder="请简要阐明需要通知的内容:" 
+						maxlength="200"
+						v-model="content"/>
 				</view>
 				<view class="input-block" v-if="!imgUrl">
-					<text>上传你的小区平面图</text>
-					<view class='img-upload' >
-						<text @click="ChooseImage">
-							可先编辑后上传
+					<text class="title3">你想上传小区平面图/信息图吗？</text>
+					<view class='block img-upload' >
+						<text class="footnote" @click="ChooseImage">
+							可在预览中选择编辑图片，并标记重要信息
 						</text>
 					</view>
 				</view>
 				<view class="input-block" v-else>
-					<text>上传你的小区平面图</text>
+					<text class="title3">你想上传小区平面图/信息图吗？</text>
 					<view class="image-preview">
 						<view style="width:100px;position: relative;">
 							<image :src="imgUrl" mode="aspectFit"/>
@@ -57,19 +41,14 @@
 					</view>
 				</view>
 				<view class="input-block">
-					<text>备注</text>
-					<textarea 
-						class='test'
-						placeholder-style="font-size:14px;color: rgba(0,0,0,.4)"
-						placeholder="例：张三 139xxxxxxxx" 
-						v-model="contact" 
-						@change='onChangeContact'
-					/>
+					<text class="title3">你还想补充什么呢？</text>
+					<van-field custom-class='block' placeholder="可填写负责人及其联系方式，或你想说的话" @change="changeContact"/>
 				</view>		
-			</scroll-view>
-		</view>
+				</view>
+		</scroll-view>
+		
 		<view class="create-poster">
-			<button type="default" @click="handleCreate">生成</button>
+			<button class="title3" type="default" @click="handleCreate">生成简报</button>
 		</view>
 		<van-calendar :show="show" :show-confirm="false" @close="showPopup(false)" @confirm="onConfirm"/>
 	</view>
@@ -83,11 +62,19 @@
 				content: '',//公告内容
 				contact: '',//备注
 				imgUrl: '',//图片
-				date: 'YYYY/MM/DD',//日期
+				date: '请点击并选择具体日期',//日期
 				show: false,				
 			}
 		},
 		methods: {
+			onShareAppMessage(){
+			},
+			changeTitle(val){
+				this.title = val.detail;
+			},
+			changeContact(val){
+				this.contact = val.detail;
+			},
 			handleCreate(){
 				let t = JSON.stringify({
 					title: this.title, //小区名字

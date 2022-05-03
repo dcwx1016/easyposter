@@ -1,13 +1,13 @@
 <template>
 	<view class="attainShare">
 	  <view class="canvasCss">
-		  <image style="width: 344px; height:580px" :src="imagePath" mode="scaleToFill"/>
+		  <image :src="imagePath" mode="scaleToFill"/>
 	  </view>
 	  <view class="canvasButton" >
-		<button type="default" @click="saveImage">保存图片</button>
+		<button class="title3" type="default" @click="saveImage">保存</button>
 	  </view>
 	  <view style="position:fixed;left:-9999px">
-	  	<painter :palette="paintPallette" widthPixels="720" @imgOK="onImgOK" :use2D="true"/>
+	  	<painter :palette="paintPallette" @imgOK="onImgOK" widthPixels="720" :use2D="true"/>
 	  </view>
 	</view>
 </template>
@@ -25,9 +25,10 @@
 			}
 		},
 		methods: {
+			onShareAppMessage() {
+			},
 			onImgOK(e) {
 			  this.imagePath = e.detail.path;
-			  console.log(this.imagePath);
 			  if (this.isSave) {
 			    this.saveImage(this.imagePath);
 			  }
@@ -73,73 +74,95 @@
 				views.push({
 					type: 'rect',
 					css: {
-					  left: '16px',
-					  top: '77px',
-					  color:'#FAFAFA',
-					  width: '312px',
-					  height:'149px',
-					  borderRadius: '16px'
+					  left: '32px',
+					  top: '138px',
+					  color:'#EFEFEF',
+					  width: '486px',
+					  height:'762px',
+					},
+				});
+				views.push({
+					type: 'rect',
+					css: {
+					  left: '22px',
+					  top: '128px',
+					  color:'#FFFFFF',
+					  width: '486px',
+					  height:'762px',
+					},
+				});
+				views.push({
+					type: 'rect',
+					css: {
+					  left: '22px',
+					  top: '108px',
+					  color:'#538BDE',
+					  width: '126px',
+					  height:'40px',
+					  borderRadius: '8px'
 					},
 				});
 				views.push({
 					type: 'text',
 					text: data.title,
 					css: {
-					  left: '16px',
-					  top: '16px',
-					  fontSize: '24px',
-					  lineHeight: '29px',
-					  fontFamily: 'Inter',
+					  left: '20px',
+					  top: '24px',
+					  fontSize: '30px',
+					  lineHeight: '42px',
+					  fontFamily: 'PingFang SC',
 					  fontWeight: 600,
 					},
 				});
 				views.push({
 					type: 'text',
-					text: data.date,
+					text: '发布于 '+data.date,
 					css: {
-					  left: '16px',
-					  top: '49px',
-					  fontSize: '12px',
-					  lineHeight: '20px',
-					  fontFamily: 'Inter',
-					  fontWeight: 600,
+					  left: '20px',
+					  top: '70px',
+					  fontSize: '16px',
+					  lineHeight: '22px',
+					  fontFamily: 'PingFang SC',
+					  fontWeight: 400,
 					},
 				});
 				views.push({
 					type: 'text',
 					text: '公告',
 					css: {
-					  left: '156px',
-					  top: '85px',
-					  fontSize: '14px',
-					  lineHeight: '22px',
-					  fontFamily: 'Inter',
-					  fontWeight: 600,
+					  left: '67px',
+					  top: '116px',
+					  fontSize: '18px',
+					  lineHeight: '25px',
+					  fontFamily: 'PingFang SC',
+					  fontWeight: 500,
+					  color: '#FFFFFF'
 					},
 				});
 				views.push({
 					type: 'text',
 					text: data.content,
 					css: {
-					  left: '32px',
-					  top: '109px',
+					  left: '55px',
+					  top: '166px',
 					  fontWeight: 400,
-					  fontSize: '12px',
-					  fontFamily: 'Inter',
-					  lineHeight: '24px',
-					  width: '280px'
+					  fontSize: '16px',
+					  fontFamily: 'PingFang SC',
+					  lineHeight: '22.4px',
+					  width: '420px'
 					},
 				});
 				views.push({
 					type: 'text',
 					text: data.contact,
 					css: {
-					  right: '16px',
-					  bottom: '4px',
+					  right: '24px',
+					  bottom: '16px',
+					  fontFamily: 'PingFang SC',
 					  fontWeight: 400,
-					  fontSize: '12px',
-					  lineHeight: '22px',
-					  color: 'black'
+					  fontSize: '14px',
+					  lineHeight: '20px',
+					  color: '#000000'
 					},
 				});
 				var _this = this;
@@ -149,41 +172,41 @@
 						success:function(img){
 							console.log(img.width, img.height);
 							if(img.width > img.height){
-								let t = 240 + (312 - img.height*312/img.width)/2 + 'px';
-								let h = img.height*312/img.width + 'px';
+								let t = 432 + (420 - img.height*420/img.width)/2 + 'px';
+								let h = img.height*420/img.width + 'px';
 								views.push({
 									type: 'image',
 									url: data.imgUrl[0],
 									css: {
-									  left: '16px',
+									  left: '55px',
 									  top: t,
-									  width: '312px',
+									  width: '420px',
 									  height: h
 									},
 								});
 								_this.paintPallette = {
-								  width: '344px',
-								  height: '580px',
-								  background: '#fff',
+								  width: '540px',
+								  height: '960px',
+								  background: '#F7F8F9',
 								  views: views,
 								}
 							}else{
-								let t = (344 - img.width*312/img.height)/2 + 'px';
-								let w = img.width*312/img.height + 'px';
+								let t = (540 - img.width*420/img.height)/2 + 'px';
+								let w = img.width*420/img.height + 'px';
 								views.push({
 									type: 'image',
 									url: data.imgUrl[0],
 									css: {
 									  left: t,
-									  top: '240px',
+									  top: '432px',
 									  width: w,
-									  height: '312px'
+									  height: '420px'
 									},
 								});
 								_this.paintPallette = {
-								  width: '344px',
-								  height: '580px',
-								  background: '#fff',
+								  width: '540px',
+								  height: '960px',
+								  background: '#F7F8F9',
 								  views: views,
 								}
 							}
@@ -191,9 +214,9 @@
 					})
 				}else{
 					this.paintPallette = {
-					  width: '344px',
-					  height: '580px',
-					  background: '#fff',
+					  width: '540px',
+					  height: '960px',
+					  background: '#F7F8F9',
 					  views: views,
 					}
 				}
@@ -205,24 +228,24 @@
 .canvasCss{
 	display: flex;
 	justify-content: center;
-	margin: 12px;
-	border: 1px solid black;
+	background-color: #F7F8F9;
+	margin: 24px;
+	border: 0.5px solid black;
+	image{
+		width: 327px; 
+		height:560px
+	}
 }
 .canvasButton{
 	display: flex;
 	justify-content: center;
 	margin-top: 40px;
 	& button{
-		font-family: 'Inter';
-		font-style: normal;
-		font-weight: 600;
-		font-size: 18px;
-		line-height: 25px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		width: 120px;
+		width: 240px;
 		height: 48px;
 		background: #FFC700;
 		border-radius: 48px;

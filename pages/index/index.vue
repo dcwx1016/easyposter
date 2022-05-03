@@ -1,10 +1,12 @@
 <template>
 	<view class="home">
-		<div class="home-title">我要做</div>
-		<button class="home-button" @click="handleJump">
-			小区简报
-		</button>
-		<text class="home-info">其他功能敬请期待...</text>
+		<div class="header large-title">我要做</div>
+		<div class="main-content">
+			<button class="home-button title1" @click="handleJump">
+				每日简报
+			</button>
+		</div>
+		<text class="home-info footnote">其他功能还在闭关修炼中…\n如果你有任何建议/想法，欢迎来找我们！\n公众号：哎我就试一下</text>
 	</view>
 </template>
 
@@ -16,55 +18,66 @@
 			}
 		},
 		methods: {
+			onShareAppMessage(){
+			},
 			handleJump(){
 				uni.navigateTo({url:"/pages/home/home"})
+			},
+			onLoad(){
+				// wx.cloud.init({
+				//   env: 'sbg-test-0gydry6z18aaa016'
+				// });
+				// const db = wx.cloud.database();
+				// const feedback = db.collection('feeback');
+				// feedback.add({
+				//   // data 字段表示需新增的 JSON 数据
+				//   data: {
+				// 	// _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
+				// 	description: "test02"
+				//   },
+				//   success: function(res) {
+				// 	// res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
+				// 	console.log(res)
+				//   },
+				//   fail: function(res) {
+				// 	// res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
+				// 	console.log(res)
+				//   }
+				// })
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-.home{
+.home, .main-content, .home-button, .home-info{
 	display: flex;
+	align-items: center;
+}
+.home{
 	flex-direction: column;
-	justify-content: space-around;
 	height: 100vh;
 }
-.home-title{
-	font-family: PingFang SC;
-	font-size: 36px;
-	font-weight: 600;
-	line-height: 50px;
-	letter-spacing: 0em;
-	text-align: center;
+.header{
+	margin-top: 64px;
+}
+.main-content{
+	flex:1;
 }
 .home-button{
 	width: 240px;
 	height: 82px;
 	background-color: #FFC700;
 	border-radius: 48px;
-	font-family: PingFang SC;
-	font-size: 24px;
-	font-weight: 600;
-	line-height: 34px;
-	letter-spacing: 0em;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	text-align: center;
+	justify-content: center;
 	&::after{
 		border: none;
 	}
 }
 .home-info{
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 17px;
-	display: flex;
 	justify-content: center;
-	align-items: center;
 	text-align: center;
+	margin-bottom: 64px;
 }
 </style>
